@@ -14,7 +14,7 @@ import { ServicioPruebaService } from './Servicios/servicio-prueba.service';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [ServicioPruebaService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

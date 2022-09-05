@@ -12,6 +12,8 @@ export const routes: Routes = [
   {path: '', component: RegistrarAsistenciaComponent},
   {path: 'consultar', component: ConsultarAsistenciaComponent},
 ]
+import { ServicioPruebaService } from './Servicios/servicio-prueba.service';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ export const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [ServicioPruebaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,8 @@ import { FingerprintReader,
    SamplesAcquired,
    AcquisitionStarted,
    AcquisitionStopped, } from '@digitalpersona/devices';
+import './core/modules/WebSdk';
+
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy{
   infoFingerPrintReader : any;
   listaSamplesFingerPrint : any;
   currentImageFinger : any;
+  currentImageFingerFixed : any;
 
   private reader : FingerprintReader;
 
@@ -63,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy{
     this.reader.off("SamplesAcquired", this.onSamplesAcquired)
   }
 
+  /*** Lista el dispositivo */
   nf_listarDispositivos(){
     Promise.all([
       this.reader.enumerateDevices()
@@ -74,4 +78,71 @@ export class AppComponent implements OnInit, OnDestroy{
     })
     .catch(error => { console.log(error); });
   }
+
+  /*** Lee info del dispositivo */
+  fn_DeviceInfo(){
+    Promise.all([
+      this.reader.getDeviceInfo(this.listaFingerPrintReader[0])
+      ])
+      .then(results => {
+        this.infoFingerPrintReader = results[0];
+        console.log("Info FingerReader");
+        console.log( this.infoFingerPrintReader);
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  /*** Iniciar captura de huella */
+  fn_StartCapturaFP() {
+    this.reader.startAcquisition(SampleFormat.PngImage, this.infoFingerPrintReader['DeviceID']).then((response) => {
+        console.log("Empezar captura");
+        console.log(response);
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
+
+   /*** Detener captura de huella */
+   fn_EndCapturaFP() {
+    this.reader.stopAcquisition(this.infoFingerPrintReader['DeviceID'])
+    .then((response) => {
+        console.log("Parar captura");
+        console.log(response);
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
+
+  /*** Tomar captura */
+fn_CapturaFP() {
+  var ListImages = this.listaSamplesFingerPrint['samples'];
+  var lsize = Object.keys(ListImages).length;
+
+  if(ListImages != null && ListImages != undefined) {
+    if(lsize > 0) {
+      this.currentImageFinger = ListImages[0];
+      this.currentImageFingerFixed = this.fn_FixFormatImagenBase64(this.currentImageFinger);
+
+      console.log(this.currentImageFinger)
+      console.log(this.currentImageFingerFixed)
+    }
+  }
+}
+
+/*** Corregir formato base 64 */
+fn_FixFormatImagenBase64(prm_imagebase : any) {
+  var strImage = "";
+  strImage = prm_imagebase;
+
+  strImage = strImage.replace(/_/g, "/");
+  strImage = strImage.replace(/-/g, "+");
+ console.log(strImage)
+
+ return strImage;
+
+
+}
+
 }

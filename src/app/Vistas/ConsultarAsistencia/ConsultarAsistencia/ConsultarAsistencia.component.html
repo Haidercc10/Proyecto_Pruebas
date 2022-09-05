@@ -1,0 +1,98 @@
+<div class="contain">
+  <div class="container-fluid">
+    <div class="mb-4 Titulo">
+      <h2 class="tituloRojo">Consulta de Asistencia</h2>
+    </div>
+    <div class="mb-4">
+      <hr class="colorLinea">
+    </div>
+  </div>
+</div>
+
+<div class="contain">
+  <div class="container-fluid">
+    <div class="container">
+
+      <form [formGroup]="FormFiltrosConsulta">
+        <div class="mb-3">
+          <div class="row g-3">
+            <div class="form-floating col-md">
+              <input formControlName="idTrabajador" type="number" min="0" class="form-control" id="floatingInput" name="MapId" placeholder="Id">
+              <label for="floatingInput">Id Trabajador</label>
+            </div>
+            <div class="form-floating col-md">
+              <input formControlName="NombreTrabajador" type="text" class="form-control" id="floatingInput" name="MapId" placeholder="Id">
+              <label for="floatingInput">Nombre Trabajador</label>
+            </div>
+            <div class="form-floating col-md-2">
+              <input formControlName="fechaInicial" type="date" class="form-control" id="floatingInput" name="MapId" placeholder="Id">
+              <label for="floatingInput">Fecha Inicial</label>
+            </div>
+            <div class="form-floating col-md-2">
+              <input formControlName="fechaFinal" type="date" class="form-control" id="floatingInput" name="MapId" placeholder="Id">
+              <label for="floatingInput">Fecha Final</label>
+            </div>
+            <div class="form-floating col-md-2">
+              <select formControlName="Turno" class="form-select form-select-sm" id="floatingSelect" aria-label="Floating label select example" required>
+                <option [ngValue]="turno" *ngFor="let turno of turnos">{{turno}}</option>
+              </select>
+              <label for="floatingSelect">Turnos</label>
+            </div>
+          </div>
+
+          <div class="row g-3" style="margin-top: 1%;">
+            <div class="mb-0">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button class="btn btn-danger btn-danger-sm" type="button" (click)="consultarAsistencia()">Consultar</button>
+                <button class="btn btn-secondary btn-secondary-sm" type="button" (click)="limpiarCampos()">Limpiar Filtros</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="mb-2">
+        <div class="row g-1">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="table">
+              <thead class="TitulosTabla">
+                <tr>
+                  <th id="idTrabajador" scope="col">Id Trabajador</th>
+                  <th id="nombreTrabajador" scope="col">Nombre Trabajador</th>
+                  <th id="horaEntrada" scope="col">Hora Entrada</th>
+                  <th id="horaReceso" scope="col">Hora Salida a Receso</th>
+                  <th id="horaEntrada2" scope="col">Hora Entrada de Receso</th>
+                  <th id="horaSalida" scope="col">Hora Salida</th>
+                  <th id="turno" scope="col">Turno</th>
+                  <th id="cantHorasentrada_receso" scope="col">N° H. de Entrada a Receso</th>
+                  <th id="cantHorasEntrada2_salida" scope="col">N° H. de Receso a Salida</th>
+                  <th id="totalHoras" scope="col">Total Horas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of datosAsistencia">
+                  <td id="idTrabajador" scope="col">{{item}}</td>
+                  <td id="nombreTrabajador" scope="col">{{item}}</td>
+                  <td id="horaEntrada" scope="col">{{item}}</td>
+                  <td id="horaReceso" scope="col">{{item}}</td>
+                  <td id="horaEntrada2" scope="col">{{item}}</td>
+                  <td id="horaSalida" scope="col">{{item}}</td>
+                  <td id="turno" scope="col">{{item}}</td>
+                  <td id="cantHorasentrada_receso" scope="col">{{item}}</td>
+                  <td id="cantHorasEntrada2_salida" scope="col">{{item}}</td>
+                  <td id="totalHoras" scope="col">{{item}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-0">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button class="btn btn-danger btn-danger-sm" type="submit">Exportar Excel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
